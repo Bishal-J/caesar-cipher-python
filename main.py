@@ -6,26 +6,19 @@ instruction = input("Type 'encode' to encrypt, type 'decode' to decrypt: \n").lo
 user_message = input("Type your message:\n").lower()
 shift = int(input("Type the shift number:\n"))
 
+def ceaser(message, shift_amount, action_type):
+    text = ""
+    if action_type == 'decode':
+        shift_amount *= -1
 
-def encrypt(original_text, shift_amount):
-    cipher_text = ""
-    for letter in original_text:
-        shifted_letter = alphabet.index(letter) + shift_amount
-        shifted_letter %= len(alphabet)
-        cipher_text += alphabet[shifted_letter]
+    for letter in message:
+        shifted_position = abs(alphabet.index(letter) + shift_amount)
+        shifted_position %= len(alphabet)
+        text += alphabet[shifted_position]
 
-    print(f"Your Encoded Text: {cipher_text}")
+    if action_type == 'decode':
+        print(f"Your Decoded Text: {text}")
+    else:
+        print(f"Your Encoded Text: {text}")
 
-
-def decrypt(encrypted_text, shift_amount):
-    plain_text = ""
-    for letter in encrypted_text:
-        shifted_letter = abs(alphabet.index(letter) - shift_amount)
-        shifted_letter %= len(alphabet)
-        plain_text += alphabet[shifted_letter]
-
-    print(f"Your Decoded Text: {plain_text}")
-
-
-encrypt(original_text=user_message, shift_amount=shift)
-decrypt(encrypted_text=user_message, shift_amount=shift)
+ceaser(message=user_message, shift_amount=shift, action_type=instruction)
