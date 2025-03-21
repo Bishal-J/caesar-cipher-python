@@ -16,4 +16,16 @@ def encrypt(original_text, shift_amount):
 
     print(f"Your Encoded Text: {cipher_text}")
 
+
+def decrypt(encrypted_text, shift_amount):
+    plain_text = ""
+    for letter in encrypted_text:
+        shifted_letter = abs(alphabet.index(letter) - shift_amount)
+        shifted_letter %= len(alphabet)
+        plain_text += alphabet[shifted_letter]
+
+    print(f"Your Decoded Text: {plain_text}")
+
+
 encrypt(original_text=user_message, shift_amount=shift)
+decrypt(encrypted_text=user_message, shift_amount=shift)
