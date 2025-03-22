@@ -1,10 +1,8 @@
 import string
 
-alphabet = list(string.ascii_lowercase)
+from sympy import false
 
-instruction = input("Type 'encode' to encrypt, type 'decode' to decrypt: \n").lower()
-user_message = input("Type your message:\n").lower()
-shift = int(input("Type the shift number:\n"))
+alphabet = list(string.ascii_lowercase + string.digits  + string.punctuation)
 
 def ceaser(message, shift_amount, action_type):
     text = ""
@@ -12,13 +10,27 @@ def ceaser(message, shift_amount, action_type):
         shift_amount *= -1
 
     for letter in message:
-        shifted_position = abs(alphabet.index(letter) + shift_amount)
-        shifted_position %= len(alphabet)
-        text += alphabet[shifted_position]
+        if letter not in alphabet:
+            text += letter
+        else:
+            shifted_position = abs(alphabet.index(letter) + shift_amount)
+            shifted_position %= len(alphabet)
+            text += alphabet[shifted_position]
 
     if action_type == 'decode':
         print(f"Your Decoded Text: {text}")
     else:
         print(f"Your Encoded Text: {text}")
 
-ceaser(message=user_message, shift_amount=shift, action_type=instruction)
+
+exit_caesar = False
+
+while not exit_caesar:
+    instruction = input("Type 'encode' to encrypt, type 'decode' to decrypt: \n").lower().strip()
+    user_message = input("Type your message:\n").lower()
+    shift = int(input("Type the shift number:\n").strip())
+    ceaser(message=user_message, shift_amount=shift, action_type=instruction)
+    should_continue = input("Do you want to continue? Type 'y' for Yes and 'n' for No: ").lower().strip()
+    if should_continue != 'y':
+        exit_caesar = True
+        print("Goodbye! Do visit again.")
